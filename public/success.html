@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Order Confirmed – HeightMax</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root { --green: #2d6a4f; --green-light: #52b788; --dark: #0f1a14; --bg: #f5f2ec; --border: #d9d4c8; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; }
+  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 24px; padding: 56px 48px; text-align: center; max-width: 480px; width: 100%; box-shadow: 0 20px 60px #0001; }
+  .check-circle { width: 80px; height: 80px; background: #d8f3dc; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 36px; }
+  h1 { font-family: 'Bebas Neue', sans-serif; font-size: 42px; letter-spacing: 2px; color: var(--dark); margin-bottom: 12px; }
+  p { font-size: 15px; color: #6b7c70; line-height: 1.65; margin-bottom: 8px; }
+  .order-note { background: #f0fff4; border: 1.5px solid #b7e4c7; border-radius: 12px; padding: 16px 20px; margin: 28px 0; font-size: 13px; color: var(--green); font-weight: 500; }
+  .btn { display: inline-block; background: var(--green); color: #fff; padding: 14px 36px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 15px; transition: background .2s; margin-top: 8px; }
+  .btn:hover { background: #1b4332; }
+  .logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; color: var(--green-light); margin-bottom: 32px; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">HeightMax</div>
+    <div class="check-circle">✅</div>
+    <h1>Order Confirmed!</h1>
+    <p>Thank you for your purchase. Your order has been received and is being processed.</p>
+    <p>A confirmation email with your order details and tracking info will be sent to you shortly.</p>
+    <div class="order-note">
+      📦 Orders ship within 1 business day. You'll receive a tracking number by email once dispatched.
+    </div>
+    <a href="/heightmax-store.html" class="btn">Continue Shopping</a>
+  </div>
+</body>
+</html>

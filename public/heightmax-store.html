@@ -23,6 +23,10 @@
   .nav-links li a.active { color: var(--green-light); background: rgba(82,183,136,.12); }
   .nav-cta { background: var(--green-light); color: var(--dark); border: none; padding: 9px 20px; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 13px; cursor: pointer; transition: background .2s; white-space: nowrap; flex-shrink: 0; }
   .nav-cta:hover { background: var(--accent); }
+  .nav-cart-btn { position: relative; background: rgba(255,255,255,.08); border: 1.5px solid rgba(255,255,255,.12); color: #fff; padding: 8px 16px 8px 14px; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 13px; cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: 8px; white-space: nowrap; flex-shrink: 0; margin-left: 8px; }
+  .nav-cart-btn:hover { background: rgba(255,255,255,.14); }
+  .cart-count { background: var(--accent); color: var(--dark); font-size: 11px; font-weight: 800; min-width: 18px; height: 18px; border-radius: 99px; display: inline-flex; align-items: center; justify-content: center; padding: 0 4px; }
+  .cart-count.hidden { display: none; }
 
   /* PAGES */
   .page { display: none; }
@@ -60,6 +64,47 @@
   /* CART TOAST */
   #cart-toast { position: fixed; bottom: 30px; right: 30px; z-index: 999; background: var(--green); color: #fff; padding: 16px 28px; border-radius: 12px; font-weight: 600; font-size: 15px; box-shadow: 0 8px 30px #0004; transform: translateY(80px); opacity: 0; transition: all .3s; }
   #cart-toast.show { transform: translateY(0); opacity: 1; }
+
+  /* CART DRAWER */
+  .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 400; opacity: 0; pointer-events: none; transition: opacity .3s; }
+  .cart-overlay.open { opacity: 1; pointer-events: all; }
+  .cart-drawer { position: fixed; top: 0; right: 0; height: 100vh; width: 420px; max-width: 100vw; background: var(--bg); z-index: 500; transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; box-shadow: -8px 0 40px #0004; }
+  .cart-drawer.open { transform: translateX(0); }
+  .cart-header { background: var(--dark); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .cart-header-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; color: #fff; }
+  .cart-close { background: none; border: none; color: #aaa; font-size: 24px; cursor: pointer; line-height: 1; padding: 4px; transition: color .2s; }
+  .cart-close:hover { color: #fff; }
+  .cart-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
+  .cart-empty { text-align: center; padding: 60px 20px; color: var(--muted); }
+  .cart-empty-icon { font-size: 52px; margin-bottom: 16px; }
+  .cart-empty p { font-size: 15px; margin-bottom: 20px; }
+  .cart-item { display: flex; gap: 14px; padding: 16px 0; border-bottom: 1.5px solid var(--border); align-items: flex-start; }
+  .cart-item:last-child { border-bottom: none; }
+  .cart-item-icon { width: 52px; height: 52px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-weight: 600; font-size: 14px; margin-bottom: 3px; }
+  .cart-item-variant { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+  .cart-item-controls { display: flex; align-items: center; gap: 10px; }
+  .qty-btn { width: 28px; height: 28px; border-radius: 6px; border: 1.5px solid var(--border); background: var(--white); color: var(--text); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; line-height: 1; }
+  .qty-btn:hover { border-color: var(--green); color: var(--green); }
+  .qty-val { font-weight: 600; font-size: 14px; min-width: 20px; text-align: center; }
+  .cart-item-remove { background: none; border: none; color: #bbb; font-size: 18px; cursor: pointer; padding: 4px; transition: color .2s; margin-left: auto; }
+  .cart-item-remove:hover { color: #e74c3c; }
+  .cart-item-price { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--dark); white-space: nowrap; padding-top: 2px; }
+  .cart-footer { background: var(--white); border-top: 2px solid var(--border); padding: 20px 24px; flex-shrink: 0; }
+  .cart-subtotal-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 14px; color: var(--muted); }
+  .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .cart-total-label { font-weight: 700; font-size: 16px; }
+  .cart-total-amount { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--dark); }
+  .btn-checkout { width: 100%; background: var(--green); color: #fff; border: none; padding: 16px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 16px; cursor: pointer; transition: background .2s; }
+  .btn-checkout:hover { background: #1b4332; }
+  .cart-shipping-note { text-align: center; font-size: 11px; color: var(--muted); margin-top: 10px; }
+
+  /* PRODUCT CARD UPDATES */
+  .product-size-row { display: flex; gap: 8px; margin-bottom: 14px; align-items: center; }
+  .product-size-label { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: .5px; text-transform: uppercase; }
+  .cap-chip { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 99px; border: 1.5px solid var(--border); color: var(--muted); cursor: pointer; transition: all .15s; }
+  .cap-chip:hover, .cap-chip.selected { border-color: var(--green); color: var(--green); background: #d8f3dc; }
 
   /* HOME */
   .hero { min-height: 88vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 60px 80px; gap: 60px; position: relative; overflow: hidden; }
@@ -270,6 +315,9 @@
     <li><a href="#" onclick="showPage('posture');return false;">Posture Corrector</a></li>
   </ul>
   <button class="nav-cta" onclick="addToCart('HeightMax Bundle')">Order Now</button>
+  <button class="nav-cart-btn" onclick="openCart()">
+    🛒 Cart <span class="cart-count hidden" id="cart-count">0</span>
+  </button>
 </nav>
 
 <!-- ═══════════ HOME ═══════════ -->
@@ -424,27 +472,105 @@
     <div class="products-grid">
       <div class="product-card">
         <div class="product-img" style="background:linear-gradient(135deg,#d8f3dc,#b7e4c7);">🦴</div>
-        <div class="product-body"><div class="product-tag">Bone Health</div><div class="product-name">Calcium Complex</div><div class="product-desc">High-absorption calcium carbonate to strengthen bones and support growth. 500mg per serving, 60 capsules.</div><div class="product-footer"><div class="product-price">$24</div><button class="btn-add" onclick="addToCart('Calcium Complex')">+ Add</button></div></div>
+        <div class="product-body">
+          <div class="product-tag">Bone Health</div>
+          <div class="product-name">Calcium Complex</div>
+          <div class="product-desc">High-absorption calcium carbonate to strengthen bones and support growth. 500mg per serving.</div>
+          <div class="product-size-row">
+            <span class="product-size-label">Size:</span>
+            <span class="cap-chip selected" onclick="selectCap(this)">60 ct — $24</span>
+            <span class="cap-chip" onclick="selectCap(this)">120 ct — $42</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price" id="price-calcium">$24</div>
+            <button class="btn-add" onclick="addProductToCart(this, 'Calcium Complex', '🦴', 'linear-gradient(135deg,#d8f3dc,#b7e4c7)')">+ Add to Cart</button>
+          </div>
+        </div>
       </div>
       <div class="product-card">
         <div class="product-img" style="background:linear-gradient(135deg,#fff3cd,#ffe69c);">☀️</div>
-        <div class="product-body"><div class="product-tag">Absorption + Bone</div><div class="product-name">Vitamin K2-D3</div><div class="product-desc">D3 boosts calcium absorption while K2 directs it into your bones. 5000 IU D3 + 100mcg K2, 60 softgels.</div><div class="product-footer"><div class="product-price">$22</div><button class="btn-add" onclick="addToCart('Vitamin K2-D3')">+ Add</button></div></div>
+        <div class="product-body">
+          <div class="product-tag">Absorption + Bone</div>
+          <div class="product-name">Vitamin K2-D3</div>
+          <div class="product-desc">D3 boosts calcium absorption while K2 directs it into your bones. 5000 IU D3 + 100mcg K2.</div>
+          <div class="product-size-row">
+            <span class="product-size-label">Size:</span>
+            <span class="cap-chip selected" onclick="selectCap(this)">60 ct — $22</span>
+            <span class="cap-chip" onclick="selectCap(this)">120 ct — $38</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price">$22</div>
+            <button class="btn-add" onclick="addProductToCart(this, 'Vitamin K2-D3', '☀️', 'linear-gradient(135deg,#fff3cd,#ffe69c)')">+ Add to Cart</button>
+          </div>
+        </div>
       </div>
       <div class="product-card">
         <div class="product-img" style="background:linear-gradient(135deg,#e0d7ff,#c9b8ff);">⚡</div>
-        <div class="product-body"><div class="product-tag">Growth + Sleep</div><div class="product-name">Zinc + Magnesium</div><div class="product-desc">ZMA formula that enhances sleep quality and supports IGF-1 production — a key growth factor for teens and young adults.</div><div class="product-footer"><div class="product-price">$19</div><button class="btn-add" onclick="addToCart('Zinc + Magnesium')">+ Add</button></div></div>
+        <div class="product-body">
+          <div class="product-tag">Growth + Sleep</div>
+          <div class="product-name">Zinc + Magnesium</div>
+          <div class="product-desc">ZMA formula that enhances sleep quality and supports IGF-1 production — a key growth factor for teens and young adults.</div>
+          <div class="product-size-row">
+            <span class="product-size-label">Size:</span>
+            <span class="cap-chip selected" onclick="selectCap(this)">60 ct — $19</span>
+            <span class="cap-chip" onclick="selectCap(this)">120 ct — $34</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price">$19</div>
+            <button class="btn-add" onclick="addProductToCart(this, 'Zinc + Magnesium', '⚡', 'linear-gradient(135deg,#e0d7ff,#c9b8ff)')">+ Add to Cart</button>
+          </div>
+        </div>
       </div>
       <div class="product-card">
         <div class="product-img" style="background:linear-gradient(135deg,#d1ecf1,#a8d8e8);">🧠</div>
-        <div class="product-body"><div class="product-tag">Brain + Growth</div><div class="product-name">Huperzine A</div><div class="product-desc">Supports cognitive function and has been studied for its role in stimulating growth hormone release. 200mcg, 60 capsules.</div><div class="product-footer"><div class="product-price">$27</div><button class="btn-add" onclick="addToCart('Huperzine A')">+ Add</button></div></div>
+        <div class="product-body">
+          <div class="product-tag">Brain + Growth</div>
+          <div class="product-name">Huperzine A</div>
+          <div class="product-desc">Supports cognitive function and has been studied for its role in stimulating growth hormone release. 200mcg per capsule.</div>
+          <div class="product-size-row">
+            <span class="product-size-label">Size:</span>
+            <span class="cap-chip selected" onclick="selectCap(this)">60 ct — $27</span>
+            <span class="cap-chip" onclick="selectCap(this)">120 ct — $48</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price">$27</div>
+            <button class="btn-add" onclick="addProductToCart(this, 'Huperzine A', '🧠', 'linear-gradient(135deg,#d1ecf1,#a8d8e8)')">+ Add to Cart</button>
+          </div>
+        </div>
       </div>
       <div class="product-card">
         <div class="product-img" style="background:linear-gradient(135deg,#fde8d8,#f9c9a8);">💪</div>
-        <div class="product-body"><div class="product-tag">Growth Hormone</div><div class="product-name">L-Arginine & Ornithine</div><div class="product-desc">Amino acid combo studied to stimulate natural GH release. Best taken before sleep for maximum pituitary response. 500mg each.</div><div class="product-footer"><div class="product-price">$29</div><button class="btn-add" onclick="addToCart('L-Arginine & Ornithine')">+ Add</button></div></div>
+        <div class="product-body">
+          <div class="product-tag">Growth Hormone</div>
+          <div class="product-name">L-Arginine & Ornithine</div>
+          <div class="product-desc">Amino acid combo studied to stimulate natural GH release. Best taken before sleep for maximum pituitary response. 500mg each.</div>
+          <div class="product-size-row">
+            <span class="product-size-label">Size:</span>
+            <span class="cap-chip selected" onclick="selectCap(this)">60 ct — $29</span>
+            <span class="cap-chip" onclick="selectCap(this)">120 ct — $52</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price">$29</div>
+            <button class="btn-add" onclick="addProductToCart(this, 'L-Arginine & Ornithine', '💪', 'linear-gradient(135deg,#fde8d8,#f9c9a8)')">+ Add to Cart</button>
+          </div>
+        </div>
       </div>
       <div class="product-card">
         <div class="product-img" style="background:linear-gradient(135deg,#d4edda,#a3d9a5);">💊</div>
-        <div class="product-body"><div class="product-tag">Complete Formula</div><div class="product-name">HeightMax Capsules</div><div class="product-desc">Our flagship all-in-one formula combining all key growth nutrients into a single daily capsule. The foundation of any HeightMax routine.</div><div class="product-footer"><div class="product-price">$39</div><button class="btn-add" onclick="addToCart('HeightMax Capsules')">+ Add</button></div></div>
+        <div class="product-body">
+          <div class="product-tag">Complete Formula</div>
+          <div class="product-name">HeightMax Capsules</div>
+          <div class="product-desc">Our flagship all-in-one formula combining all key growth nutrients into a single daily capsule. The foundation of any HeightMax routine.</div>
+          <div class="product-size-row">
+            <span class="product-size-label">Size:</span>
+            <span class="cap-chip selected" onclick="selectCap(this)">60 ct — $39</span>
+            <span class="cap-chip" onclick="selectCap(this)">120 ct — $69</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price">$39</div>
+            <button class="btn-add" onclick="addProductToCart(this, 'HeightMax Capsules', '💊', 'linear-gradient(135deg,#d4edda,#a3d9a5)')">+ Add to Cart</button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -808,21 +934,21 @@
           <p><strong>Access:</strong> You may request a copy of the personal information we hold about you.</p>
           <p><strong>Correction:</strong> You may request that we correct inaccurate or incomplete information about you.</p>
           <p><strong>Deletion:</strong> You may request that we delete your personal information, subject to certain legal obligations (e.g., we may need to retain transaction records for tax purposes).</p>
-          <p><strong>Opt-out of marketing:</strong> You can unsubscribe from our marketing emails at any time by clicking "Unsubscribe" in any email, or by emailing us at support@heightmax.com.</p>
-          <p>To exercise any of these rights, contact us at <strong>support@heightmax.com</strong>. We will respond to all requests within 30 days.</p>
+          <p><strong>Opt-out of marketing:</strong> You can unsubscribe from our marketing emails at any time by clicking "Unsubscribe" in any email, or by emailing us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9cefe9ececf3eee8dcf4f9f5fbf4e8f1fde4b2fff3f1">[email&#160;protected]</a>.</p>
+          <p>To exercise any of these rights, contact us at <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1d2d4d1d1ced3d5e1c9c4c8c6c9d5ccc0d98fc2cecc">[email&#160;protected]</a></strong>. We will respond to all requests within 30 days.</p>
         </div>
 
         <div class="policy-section" id="priv-children">
           <h3>Children's Privacy</h3>
           <p>HeightMax products are intended for individuals aged 12 and up, and we recognize that many of our customers are minors. We do not knowingly collect personal information from children under the age of 13 without verifiable parental consent.</p>
-          <p>If you are a parent or guardian and believe your child under 13 has provided us with personal information without your consent, please contact us immediately at support@heightmax.com. We will promptly delete such information from our records.</p>
+          <p>If you are a parent or guardian and believe your child under 13 has provided us with personal information without your consent, please contact us immediately at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f3808683839c8187b39b969a949b879e928bdd909c9e">[email&#160;protected]</a>. We will promptly delete such information from our records.</p>
           <p>For customers between the ages of 13 and 17, we encourage parents and guardians to review this Privacy Policy together with their child before making a purchase.</p>
         </div>
 
         <div class="policy-section" id="priv-contact">
           <h3>Contact Us About Privacy</h3>
           <p>If you have any questions, concerns, or requests related to this Privacy Policy or our data practices, please reach out to us:</p>
-          <p><strong>Email:</strong> support@heightmax.com<br><strong>Subject line:</strong> Privacy Inquiry</p>
+          <p><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="becdcbceced1cccafed6dbd7d9d6cad3dfc690ddd1d3">[email&#160;protected]</a><br><strong>Subject line:</strong> Privacy Inquiry</p>
           <p>We take all privacy concerns seriously and will respond within 5 business days. This Privacy Policy may be updated from time to time. We will notify you of material changes by posting the updated policy on this page with a revised date at the top.</p>
         </div>
 
@@ -857,7 +983,7 @@
           <h3>Acceptance of Terms</h3>
           <p>By accessing or using the HeightMax website, placing an order, or using any of our products or services, you agree to be legally bound by these Terms of Service ("Terms") and our Privacy Policy, which is incorporated herein by reference.</p>
           <p>If you do not agree with any part of these Terms, you must not use our website or purchase our products. These Terms apply to all visitors, customers, and others who access or use our services.</p>
-          <div class="policy-highlight"><p>📄 These Terms constitute a legally binding agreement between you and HeightMax. If you have questions before purchasing, contact us at support@heightmax.com.</p></div>
+          <div class="policy-highlight"><p>📄 These Terms constitute a legally binding agreement between you and HeightMax. If you have questions before purchasing, contact us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9cefe9ececf3eee8dcf4f9f5fbf4e8f1fde4b2fff3f1">[email&#160;protected]</a>.</p></div>
         </div>
 
         <div class="policy-section" id="tos-products">
@@ -932,12 +1058,39 @@
           <h3>Changes to These Terms</h3>
           <p>HeightMax reserves the right to modify these Terms at any time. When we make material changes, we will update the "Last updated" date at the top of this page and, where appropriate, notify you by email.</p>
           <p>Your continued use of our website or purchase of our products after any changes to the Terms constitutes your acceptance of the revised Terms. If you do not agree to the updated Terms, you must discontinue use of our services.</p>
-          <p>We encourage you to review these Terms periodically to stay informed of any updates. If you have questions about these Terms, contact us at <strong>support@heightmax.com</strong>.</p>
+          <p>We encourage you to review these Terms periodically to stay informed of any updates. If you have questions about these Terms, contact us at <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="10636560607f6264507875797778647d71683e737f7d">[email&#160;protected]</a></strong>.</p>
         </div>
 
       </div>
     </div>
   </section>
+</div>
+
+<!-- CART OVERLAY + DRAWER -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-header">
+    <div class="cart-header-title">Your Cart</div>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cart-body">
+    <div class="cart-empty" id="cart-empty">
+      <div class="cart-empty-icon">🛒</div>
+      <p>Your cart is empty.<br>Add some products to get started!</p>
+      <button class="btn-primary" onclick="closeCart(); showPage('supplements')">Shop Supplements</button>
+    </div>
+    <div id="cart-items"></div>
+  </div>
+  <div class="cart-footer" id="cart-footer" style="display:none;">
+    <div class="cart-subtotal-row"><span>Subtotal</span><span id="cart-subtotal">$0.00</span></div>
+    <div class="cart-subtotal-row"><span>Shipping</span><span style="color:var(--green);font-weight:600;">FREE</span></div>
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-amount" id="cart-total">$0.00</span>
+    </div>
+    <button class="btn-checkout" onclick="checkout()">Proceed to Checkout →</button>
+    <p class="cart-shipping-note">🔒 Secure checkout · Free shipping on all orders</p>
+  </div>
 </div>
 
 <!-- FOOTER -->
@@ -977,8 +1130,7 @@
 <div id="cart-toast">✓ Added to cart!</div>
 
 <script>
-  const pageOrder = ['home','bundles','supplements','boosters','posture','faq','contact','shipping'];
-
+  // PAGE NAVIGATION
   function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
@@ -989,13 +1141,184 @@
     window.scrollTo({top: 0, behavior: 'smooth'});
   }
 
-  function addToCart(item) {
-    const toast = document.getElementById('cart-toast');
-    toast.textContent = '✓ ' + (item || 'Item') + ' added to cart!';
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
+  // CART STATE
+  let cart = [];
+
+  function loadCart() {
+    try {
+      const saved = localStorage.getItem('hm_cart');
+      cart = saved ? JSON.parse(saved) : [];
+    } catch(e) { cart = []; }
+    renderCart();
   }
 
+  function saveCart() {
+    try { localStorage.setItem('hm_cart', JSON.stringify(cart)); } catch(e) {}
+  }
+
+  // CART DRAWER
+  function openCart() {
+    document.getElementById('cart-drawer').classList.add('open');
+    document.getElementById('cart-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCart() {
+    document.getElementById('cart-drawer').classList.remove('open');
+    document.getElementById('cart-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ADD SUPPLEMENT (with capsule size)
+  function addProductToCart(btn, name, emoji, bg) {
+    const card = btn.closest('.product-body');
+    const selectedChip = card.querySelector('.cap-chip.selected');
+    const chipText = selectedChip ? selectedChip.textContent : '60 ct';
+    const priceMatch = chipText.match(/\$(\d+)/);
+    const price = priceMatch ? parseInt(priceMatch[1]) : 0;
+    const variant = chipText.split('\u2014')[0].trim();
+    addToCartItem({ id: name + '-' + variant, name, emoji, bg, variant, price });
+  }
+
+  // ADD BUNDLE / BOOSTER / POSTURE
+  function addToCart(label) {
+    const priceMap = {
+      'Starter Bundle': 69, 'Growth Stack': 149, 'Ultimate Bundle': 279,
+      'Shoe Lifts': 18, 'Sock Lifts': 14, 'Elevator Sneakers': 89,
+      'Posture Corrector': 34, 'HeightMax Bundle': 149
+    };
+    const emojiMap = {
+      'Starter Bundle':'🌱','Growth Stack':'🚀','Ultimate Bundle':'👑',
+      'Shoe Lifts':'👟','Sock Lifts':'🧦','Elevator Sneakers':'👞',
+      'Posture Corrector':'🩹','HeightMax Bundle':'🚀'
+    };
+    const bgMap = {
+      'Starter Bundle':'linear-gradient(135deg,#d8f3dc,#b7e4c7)',
+      'Growth Stack':'linear-gradient(135deg,#1b4332,#2d6a4f)',
+      'Ultimate Bundle':'linear-gradient(135deg,#0f1a14,#1b4332)',
+      'Shoe Lifts':'linear-gradient(135deg,#1b4332,#2d6a4f)',
+      'Sock Lifts':'linear-gradient(135deg,#2d6a4f,#52b788)',
+      'Elevator Sneakers':'linear-gradient(135deg,#0f1a14,#1b4332)',
+      'Posture Corrector':'linear-gradient(135deg,#d8f3dc,#b7e4c7)',
+      'HeightMax Bundle':'linear-gradient(135deg,#1b4332,#2d6a4f)'
+    };
+    addToCartItem({
+      id: label, name: label,
+      emoji: emojiMap[label] || '📦',
+      bg: bgMap[label] || 'linear-gradient(135deg,#d8f3dc,#b7e4c7)',
+      variant: '', price: priceMap[label] || 0
+    });
+  }
+
+  function addToCartItem(item) {
+    const existing = cart.find(c => c.id === item.id);
+    if (existing) { existing.qty++; }
+    else { cart.push({ ...item, qty: 1 }); }
+    saveCart();
+    renderCart();
+    showToast('✓ ' + item.name + ' added to cart!');
+    openCart();
+  }
+
+  // QUANTITY CONTROLS
+  function changeQty(id, delta) {
+    const idx = cart.findIndex(c => c.id === id);
+    if (idx === -1) return;
+    cart[idx].qty += delta;
+    if (cart[idx].qty <= 0) cart.splice(idx, 1);
+    saveCart();
+    renderCart();
+  }
+
+  function removeItem(id) {
+    cart = cart.filter(c => c.id !== id);
+    saveCart();
+    renderCart();
+  }
+
+  // RENDER CART
+  function renderCart() {
+    const itemsEl = document.getElementById('cart-items');
+    const emptyEl = document.getElementById('cart-empty');
+    const footerEl = document.getElementById('cart-footer');
+    const countEl = document.getElementById('cart-count');
+    const totalQty = cart.reduce((s, c) => s + c.qty, 0);
+    const subtotal = cart.reduce((s, c) => s + c.price * c.qty, 0);
+
+    countEl.textContent = totalQty;
+    countEl.classList.toggle('hidden', totalQty === 0);
+
+    if (cart.length === 0) {
+      emptyEl.style.display = 'block';
+      itemsEl.innerHTML = '';
+      footerEl.style.display = 'none';
+      return;
+    }
+
+    emptyEl.style.display = 'none';
+    footerEl.style.display = 'block';
+
+    itemsEl.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-icon" style="background:${item.bg}">${item.emoji}</div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          ${item.variant ? `<div class="cart-item-variant">${item.variant}</div>` : ''}
+          <div class="cart-item-controls">
+            <button class="qty-btn" onclick="changeQty('${item.id}', -1)">&#8722;</button>
+            <span class="qty-val">${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+          <div class="cart-item-price">$${(item.price * item.qty).toFixed(0)}</div>
+          <button class="cart-item-remove" onclick="removeItem('${item.id}')" title="Remove">&#10005;</button>
+        </div>
+      </div>
+    `).join('');
+
+    document.getElementById('cart-subtotal').textContent = '$' + subtotal.toFixed(2);
+    document.getElementById('cart-total').textContent = '$' + subtotal.toFixed(2);
+  }
+
+  // CHECKOUT
+  async function checkout() {
+    if (cart.length === 0) return;
+    const btn = document.querySelector('.btn-checkout');
+    btn.textContent = 'Redirecting to checkout...';
+    btn.disabled = true;
+    try {
+      const res = await fetch('/.netlify/functions/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: cart }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error(data.error || 'Something went wrong');
+      }
+    } catch (err) {
+      showToast('⚠️ Checkout failed: ' + err.message);
+      btn.textContent = 'Proceed to Checkout →';
+      btn.disabled = false;
+    }
+  }
+
+  // CAP SIZE SELECTOR
+  function selectCap(el) {
+    const row = el.closest('.product-size-row');
+    row.querySelectorAll('.cap-chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    const priceMatch = el.textContent.match(/\$(\d+)/);
+    if (priceMatch) {
+      const priceEl = el.closest('.product-body').querySelector('.product-price');
+      if (priceEl) priceEl.textContent = '$' + priceMatch[1];
+    }
+  }
+
+  // MISC
   function toggleFaq(el) {
     const wasOpen = el.classList.contains('open');
     document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
@@ -1020,11 +1343,18 @@
   }
 
   function submitContact() {
-    const toast = document.getElementById('cart-toast');
-    toast.textContent = "✓ Message sent! We'll reply within 24 hours.";
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 4000);
+    showToast("✓ Message sent! We'll reply within 24 hours.");
   }
+
+  function showToast(msg) {
+    const toast = document.getElementById('cart-toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  // INIT
+  loadCart();
 </script>
 </body>
 </html>

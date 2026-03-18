@@ -1,0 +1,8 @@
+{
+  "name": "heightmax-store",
+  "version": "1.0.0",
+  "description": "HeightMax dropshipping store",
+  "dependencies": {
+    "stripe": "^14.0.0"
+  }
+}
