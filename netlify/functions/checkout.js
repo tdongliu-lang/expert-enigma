@@ -1,18 +1,26 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
+ 
 exports.handler = async (event) => {
-  // Only allow POST
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
-
+ 
   try {
     const { items } = JSON.parse(event.body);
-
+ 
     if (!items || items.length === 0) {
       return { statusCode: 400, body: JSON.stringify({ error: "Cart is empty" }) };
     }
-
+ 
+    // Calculate order subtotal in cents
+    const subtotalCents = items.reduce((sum, item) => sum + Math.round(item.price * 100) * item.qty, 0);
+ 
+    // Free shipping on orders $50+, otherwise $5.99
+    const shippingAmount = subtotalCents >= 5000 ? 0 : 599;
+    const shippingLabel = shippingAmount === 0
+      ? "Free Standard Shipping (5–7 business days)"
+      : "Standard Shipping (5–7 business days)";
+ 
     // Build Stripe line items from cart
     const lineItems = items.map((item) => ({
       price_data: {
@@ -21,16 +29,15 @@ exports.handler = async (event) => {
           name: item.name,
           description: item.variant || undefined,
         },
-        unit_amount: Math.round(item.price * 100), // Stripe uses cents
+        unit_amount: Math.round(item.price * 100),
       },
       quantity: item.qty,
     }));
-
-    // Get the site URL for success/cancel redirects
-    const origin = event.headers.origin || event.headers.host
+ 
+    const origin = event.headers.host
       ? `https://${event.headers.host}`
       : "http://localhost:8888";
-
+ 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: lineItems,
@@ -44,39 +51,17 @@ exports.handler = async (event) => {
         {
           shipping_rate_data: {
             type: "fixed_amount",
-            fixed_amount: { amount: 0, currency: "usd" },
-            display_name: "Free Standard Shipping",
+            fixed_amount: { amount: shippingAmount, currency: "usd" },
+            display_name: shippingLabel,
             delivery_estimate: {
               minimum: { unit: "business_day", value: 5 },
               maximum: { unit: "business_day", value: 7 },
             },
           },
         },
-        {
-          shipping_rate_data: {
-            type: "fixed_amount",
-            fixed_amount: { amount: 999, currency: "usd" },
-            display_name: "Priority Shipping",
-            delivery_estimate: {
-              minimum: { unit: "business_day", value: 2 },
-              maximum: { unit: "business_day", value: 3 },
-            },
-          },
-        },
-        {
-          shipping_rate_data: {
-            type: "fixed_amount",
-            fixed_amount: { amount: 1999, currency: "usd" },
-            display_name: "Express Shipping",
-            delivery_estimate: {
-              minimum: { unit: "business_day", value: 1 },
-              maximum: { unit: "business_day", value: 2 },
-            },
-          },
-        },
       ],
     });
-
+ 
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
