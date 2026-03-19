@@ -18,8 +18,8 @@ exports.handler = async (event) => {
     // Free shipping on orders $50+, otherwise $5.99
     const shippingAmount = subtotalCents >= 5000 ? 0 : 599;
     const shippingLabel = shippingAmount === 0
-      ? "Free Standard Shipping (5–7 business days)"
-      : "Standard Shipping (5–7 business days)";
+      ? "Free Standard Shipping"
+      : "Standard Shipping";
  
     // Build Stripe line items from cart
     const lineItems = items.map((item) => ({
