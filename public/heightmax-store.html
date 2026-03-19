@@ -245,8 +245,9 @@
   .posture-feat-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
   .posture-buy-section { background: #f0f7f3; padding: 80px; }
   .posture-variants { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
-  .posture-variant { background: var(--white); border: 2px solid var(--border); border-radius: 16px; padding: 28px 24px; text-align: center; transition: all .2s; cursor: pointer; }
+  .posture-variant { background: var(--white); border: 2px solid var(--border); border-radius: 16px; overflow: hidden; text-align: center; transition: all .2s; cursor: pointer; }
   .posture-variant:hover, .posture-variant.selected { border-color: var(--green); background: #f0fff4; }
+  .posture-variant-body { padding: 20px 20px 24px; }
   .posture-variant-icon { font-size: 36px; margin-bottom: 10px; }
   .posture-variant-name { font-weight: 700; font-size: 15px; margin-bottom: 6px; }
   .posture-variant-desc { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
@@ -334,6 +335,11 @@
   </button>
 </nav>
 
+<!-- ANNOUNCEMENT BANNER -->
+<div style="background:var(--green); color:#fff; text-align:center; padding:10px 20px; font-size:13px; font-weight:600; letter-spacing:.3px;">
+  🎁 Every order includes a <strong>FREE HeightMaxxing Guide</strong> — emailed to you instantly after purchase! &nbsp;·&nbsp; Free shipping on all orders 🚚
+</div>
+
 <!-- ═══════════ HOME ═══════════ -->
 <div id="page-home" class="page active">
   <section class="hero" style="padding:60px 80px;">
@@ -350,6 +356,7 @@
         <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2d6a4f" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Made in USA</div>
         <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2d6a4f" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>GMO-Free</div>
         <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2d6a4f" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>30-Day Guarantee</div>
+        <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2d6a4f" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Free HeightMaxxing Guide</div>
       </div>
     </div>
     <div class="hero-visual">
@@ -582,7 +589,7 @@
       </div>
       <div class="product-card">
         <div class="product-img-gallery" id="gallery-larginine">
-          <div class="gallery-track" id="gallery-track-larginine"><img src="/images/L_Arginine_1.png" alt="L-Arginine & Ornithine" class="gallery-img"/><img src="/images/L_Arginine_2.png" alt="L-Arginine & Ornithine" class="gallery-img"/></div>
+          <div class="gallery-track" id="gallery-track-larginine"><img src="/images/L-Arginine_1.png" alt="L-Arginine & Ornithine" class="gallery-img"/><img src="/images/L-Arginine_2.png" alt="L-Arginine & Ornithine" class="gallery-img"/></div>
           <button class="gallery-btn gallery-prev" onclick="galleryPrev('larginine');event.stopPropagation()">&#8249;</button>
           <button class="gallery-btn gallery-next" onclick="galleryNext('larginine');event.stopPropagation()">&#8250;</button>
           <div class="gallery-dots" id="gallery-dots-larginine"><span class="gallery-dot active" onclick="galleryGoTo('larginine',0)"></span><span class="gallery-dot" onclick="galleryGoTo('larginine',1)"></span></div>
@@ -714,15 +721,17 @@
           <button class="gallery-btn gallery-next" onclick="galleryNext('posturebrace');event.stopPropagation()">&#8250;</button>
           <div class="gallery-dots" id="gallery-dots-posturebrace"><span class="gallery-dot active" onclick="galleryGoTo('posturebrace',0)"></span><span class="gallery-dot" onclick="galleryGoTo('posturebrace',1)"></span><span class="gallery-dot" onclick="galleryGoTo('posturebrace',2)"></span></div>
         </div>
-        <div class="posture-variant-name">Posture Brace</div>
-        <div class="posture-variant-desc">Upper back & shoulder support. Wears under clothes. Adjustable straps. Best for everyday use.</div>
-        <div class="booster-sizes" style="justify-content:center; margin-bottom:14px;">
-          <span class="size-chip selected" onclick="selectSize(this);event.stopPropagation()">S</span>
-          <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">M</span>
-          <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">L</span>
-          <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">XL</span>
+        <div class="posture-variant-body">
+          <div class="posture-variant-name">Posture Brace</div>
+          <div class="posture-variant-desc">Upper back & shoulder support. Wears under clothes. Adjustable straps. Best for everyday use.</div>
+          <div class="booster-sizes" style="justify-content:center; margin-bottom:14px;">
+            <span class="size-chip selected" onclick="selectSize(this);event.stopPropagation()">S</span>
+            <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">M</span>
+            <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">L</span>
+            <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">XL</span>
+          </div>
+          <div class="posture-variant-price">$34</div>
         </div>
-        <div class="posture-variant-price">$34</div>
       </div>
 
       <div class="posture-variant" onclick="selectVariant(this)">
@@ -732,15 +741,17 @@
           <button class="gallery-btn gallery-next" onclick="galleryNext('fullbackvest');event.stopPropagation()">&#8250;</button>
           <div class="gallery-dots" id="gallery-dots-fullbackvest"><span class="gallery-dot active" onclick="galleryGoTo('fullbackvest',0)"></span><span class="gallery-dot" onclick="galleryGoTo('fullbackvest',1)"></span><span class="gallery-dot" onclick="galleryGoTo('fullbackvest',2)"></span></div>
         </div>
-        <div class="posture-variant-name">Full Back Support Vest</div>
-        <div class="posture-variant-desc">Full upper and lower back correction. Ideal for long sitting sessions. Breathable mesh fabric.</div>
-        <div class="booster-sizes" style="justify-content:center; margin-bottom:14px;">
-          <span class="size-chip selected" onclick="selectSize(this);event.stopPropagation()">S</span>
-          <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">M</span>
-          <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">L</span>
-          <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">XL</span>
+        <div class="posture-variant-body">
+          <div class="posture-variant-name">Full Back Support Vest</div>
+          <div class="posture-variant-desc">Full upper and lower back correction. Ideal for long sitting sessions. Breathable mesh fabric.</div>
+          <div class="booster-sizes" style="justify-content:center; margin-bottom:14px;">
+            <span class="size-chip selected" onclick="selectSize(this);event.stopPropagation()">S</span>
+            <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">M</span>
+            <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">L</span>
+            <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">XL</span>
+          </div>
+          <div class="posture-variant-price">$52</div>
         </div>
-        <div class="posture-variant-price">$52</div>
       </div>
 
       <div class="posture-variant" onclick="selectVariant(this)">
@@ -750,15 +761,17 @@
           <button class="gallery-btn gallery-next" onclick="galleryNext('posturesensor');event.stopPropagation()">&#8250;</button>
           <div class="gallery-dots" id="gallery-dots-posturesensor"><span class="gallery-dot active" onclick="galleryGoTo('posturesensor',0)"></span><span class="gallery-dot" onclick="galleryGoTo('posturesensor',1)"></span></div>
         </div>
-        <div class="posture-variant-name">Smart Posture Sensor</div>
-        <div class="posture-variant-desc">Vibrates when you slouch. Clips to your shirt collar. Connects to app. No bulky straps.</div>
-        <div class="booster-sizes" style="justify-content:center; margin-bottom:14px;">
-          <span class="size-chip selected" onclick="selectSize(this);event.stopPropagation()">S</span>
-          <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">M</span>
-          <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">L</span>
-          <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">XL</span>
+        <div class="posture-variant-body">
+          <div class="posture-variant-name">Smart Posture Sensor</div>
+          <div class="posture-variant-desc">Vibrates when you slouch. Clips to your shirt collar. Connects to app. No bulky straps.</div>
+          <div class="booster-sizes" style="justify-content:center; margin-bottom:14px;">
+            <span class="size-chip selected" onclick="selectSize(this);event.stopPropagation()">S</span>
+            <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">M</span>
+            <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">L</span>
+            <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">XL</span>
+          </div>
+          <div class="posture-variant-price">$49</div>
         </div>
-        <div class="posture-variant-price">$49</div>
       </div>
 
     </div>
