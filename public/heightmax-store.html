@@ -326,6 +326,7 @@
     <li><a href="#" onclick="showPage('supplements');return false;">Supplements</a></li>
     <li><a href="#" onclick="showPage('boosters');return false;">Height Boosters</a></li>
     <li><a href="#" onclick="showPage('posture');return false;">Posture Corrector</a></li>
+    <li><a href="#" onclick="showPage('contact');return false;">Contact</a></li>
   </ul>
   <button class="nav-cta" onclick="addToCart('HeightMax Bundle')">Order Now</button>
   <button class="nav-cart-btn" onclick="openCart()">
@@ -1254,7 +1255,7 @@
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-    const navMap = {home:0, bundles:1, supplements:2, boosters:3, posture:4};
+    const navMap = {home:0, bundles:1, supplements:2, boosters:3, posture:4, contact:5};
     const links = document.querySelectorAll('.nav-links a');
     if (navMap[id] !== undefined && links[navMap[id]]) links[navMap[id]].classList.add('active');
     window.scrollTo({top: 0, behavior: 'smooth'});
