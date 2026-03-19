@@ -722,6 +722,7 @@
             <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">XL</span>
           </div>
           <div class="posture-variant-price">$31</div>
+          <button class="btn-add" style="width:100%;margin-top:14px;" onclick="addToCart('Posture Brace');event.stopPropagation()">+ Add to Cart</button>
         </div>
       </div>
 
@@ -742,6 +743,7 @@
             <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">XL</span>
           </div>
           <div class="posture-variant-price">$42</div>
+          <button class="btn-add" style="width:100%;margin-top:14px;" onclick="addToCart('Full Back Support Vest');event.stopPropagation()">+ Add to Cart</button>
         </div>
       </div>
 
@@ -762,12 +764,12 @@
             <span class="size-chip" onclick="selectSize(this);event.stopPropagation()">XL</span>
           </div>
           <div class="posture-variant-price">$45</div>
+          <button class="btn-add" style="width:100%;margin-top:14px;" onclick="addToCart('Smart Posture Sensor');event.stopPropagation()">+ Add to Cart</button>
         </div>
       </div>
 
     </div>
-    <div style="margin-top:36px; display:flex; gap:14px; flex-wrap:wrap;">
-      <button class="btn-primary" onclick="addToCart('Posture Corrector')">Add to Cart</button>
+    <div style="margin-top:28px; text-align:center;">
       <a href="#" class="btn-secondary" onclick="showPage('bundles');return false;">Bundle & Save More</a>
     </div>
   </div>
@@ -781,7 +783,7 @@
     <p>Everything you need to know about HeightMax products, shipping, and more.</p>
   </div>
   <section>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start;">
+    <div style="display:grid; grid-template-columns:1fr; gap:60px; align-items:start; max-width:760px;">
       <div>
         <div class="faq-category-title">Products & Supplements</div>
         <div class="faq-list" style="margin-top:12px;">
@@ -790,8 +792,6 @@
           <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Are there any side effects? <span>+</span></div><div class="faq-a">HeightMax products are made from all-natural ingredients with no artificial additives, GMOs, or synthetic hormones. As with any supplement, consult your healthcare provider before starting — especially if you're on medication or have a pre-existing condition.</div></div>
           <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">How do I take HeightMax capsules? <span>+</span></div><div class="faq-a">Take 2 capsules per day with food. For best results, take one capsule with dinner and one right before bed — growth hormones naturally peak during deep sleep. Use consistently for at least 90 days.</div></div>
           <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Can I take multiple supplements together? <span>+</span></div><div class="faq-a">Yes! Our supplements are designed to work synergistically. The Growth Stack bundle is specifically curated to combine products that complement each other safely. We recommend checking with your doctor if you have specific concerns.</div></div>
-          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Does HeightMax work after puberty? <span>+</span></div><div class="faq-a">HeightMax is most effective for those still in active growth phases (typically ages 12–22). After growth plates close, supplements won't increase bone length, but our posture correctors and height boosters can still help you look and feel taller at any age.</div></div>
-          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Are HeightMax products FDA approved? <span>+</span></div><div class="faq-a">Our products are manufactured in an FDA-registered, GMP-certified facility in the USA. Dietary supplements are not FDA-approved in the same way medications are, but our manufacturing standards meet strict federal guidelines.</div></div>
         </div>
 
         <div class="faq-category-title" style="margin-top:40px;">Height Boosters & Posture</div>
@@ -802,22 +802,7 @@
         </div>
       </div>
 
-      <div>
-        <div class="faq-category-title">Orders & Shipping</div>
-        <div class="faq-list" style="margin-top:12px;">
-          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">How long does shipping take? <span>+</span></div><div class="faq-a">Standard shipping takes 5–7 business days. Priority shipping takes 2–3 business days. Express shipping arrives within 1–2 business days. All orders are processed and dispatched within 24 hours on business days.</div></div>
-          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Do you ship internationally? <span>+</span></div><div class="faq-a">Currently we ship within the United States only. We're working on expanding to Canada and the UK soon — sign up for our email list to be notified when international shipping launches.</div></div>
-          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">How do I track my order? <span>+</span></div><div class="faq-a">Once your order ships, you'll receive a tracking number via email within 24 hours. You can use this to track your package through USPS, UPS, or FedEx depending on your shipping method.</div></div>
-          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Can I change or cancel my order? <span>+</span></div><div class="faq-a">Orders can be modified or cancelled within 2 hours of placement by contacting us at &#115;&#104;&#111;&#112;&#104;&#101;&#105;&#103;&#104;&#116;&#109;&#97;&#120;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;. After that window, orders are usually already in processing and we cannot guarantee changes.</div></div>
-        </div>
 
-        <div class="faq-category-title" style="margin-top:40px;">Returns & Refunds</div>
-        <div class="faq-list" style="margin-top:12px;">
-          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">What is your return policy? <span>+</span></div><div class="faq-a">We offer a 30-day money-back guarantee on all products. If you're not satisfied with your results for any reason, contact us within 30 days of delivery to initiate a return. Refunds are issued to the original payment method within 5–7 business days of receiving the return.</div></div>
-          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Do I need to send the product back? <span>+</span></div><div class="faq-a">For supplements, you only need to return unopened bottles. For physical products like posture correctors and shoe lifts, the item must be returned in its original condition. We cover return shipping on defective or damaged items.</div></div>
-          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">What if my order arrived damaged? <span>+</span></div><div class="faq-a">If your order arrived damaged or incorrect, email us at &#115;&#104;&#111;&#112;&#104;&#101;&#105;&#103;&#104;&#116;&#109;&#97;&#120;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109; with a photo of the damaged item within 7 days of delivery. We'll send a replacement at no charge right away.</div></div>
-        </div>
-      </div>
     </div>
 
     <div style="margin-top:56px; background:var(--dark); border-radius:20px; padding:40px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:24px;">
@@ -1301,12 +1286,12 @@
     const priceMap = {
       'Starter Bundle': 46, 'Growth Stack': 78, 'Ultimate Bundle': 129,
       'Shoe Lifts': 15, 'Sock Lifts': 12, 'Elevator Sneakers': 89,
-      'Posture Corrector': 31, 'HeightMax Bundle': 78
+      'Posture Corrector': 31, 'Posture Brace': 31, 'Full Back Support Vest': 42, 'Smart Posture Sensor': 45, 'HeightMax Bundle': 78
     };
     const emojiMap = {
       'Starter Bundle':'🌱','Growth Stack':'🚀','Ultimate Bundle':'👑',
       'Shoe Lifts':'👟','Sock Lifts':'🧦','Elevator Sneakers':'👞',
-      'Posture Corrector':'🩹','HeightMax Bundle':'🚀'
+      'Posture Corrector':'🩹', 'Posture Brace':'🩹', 'Full Back Support Vest':'🦺', 'Smart Posture Sensor':'📱','HeightMax Bundle':'🚀'
     };
     const bgMap = {
       'Starter Bundle':'linear-gradient(135deg,#d8f3dc,#b7e4c7)',
@@ -1315,7 +1300,7 @@
       'Shoe Lifts':'linear-gradient(135deg,#1b4332,#2d6a4f)',
       'Sock Lifts':'linear-gradient(135deg,#2d6a4f,#52b788)',
       'Elevator Sneakers':'linear-gradient(135deg,#0f1a14,#1b4332)',
-      'Posture Corrector':'linear-gradient(135deg,#d8f3dc,#b7e4c7)',
+      'Posture Corrector':'linear-gradient(135deg,#d8f3dc,#b7e4c7)', 'Posture Brace':'linear-gradient(135deg,#d8f3dc,#b7e4c7)', 'Full Back Support Vest':'linear-gradient(135deg,#d1ecf1,#a8d8e8)', 'Smart Posture Sensor':'linear-gradient(135deg,#0f1a14,#1b4332)',
       'HeightMax Bundle':'linear-gradient(135deg,#1b4332,#2d6a4f)'
     };
     addToCartItem({
